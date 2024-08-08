@@ -1,6 +1,11 @@
-export default function NavigationBar({ ConnectToMetamask }) {
+export default function NavigationBar({
+  ConnectToMetamask,
+  accounts,
+  connected,
+  balance,
+}) {
   return (
-    <div className="bg-[#1679AB] text-white">
+    <div className="bg-black text-white sticky">
       <nav className="bg-transparent text-white shadow-lg">
         <div className=" mx-auto px-4">
           <div className="flex justify-between">
@@ -13,16 +18,16 @@ export default function NavigationBar({ ConnectToMetamask }) {
                     className="h-8 w-8 mr-2 rounded-3xl fill-[#1679AB]"
                   />
                   <span className="font-semibold text-yellow-400 text-lg">
-                    Marketplace Maker
+                    {accounts ? accounts : "No Account Connected"}
                   </span>
                 </a>
               </div>
               <div className="hidden md:flex items-center space-x-1">
                 <a
                   href="#"
-                  class="py-4 px-2 text-white font-semibold hover:text-[#1679AB] transition duration-300"
+                  classNam="py-4 px-2 text-white font-semibold hover:text-[#1679AB] transition duration-300"
                 >
-                  Home
+                  Balance : {balance ? balance : "XXX"} DGN Tokens
                 </a>
                 <div className="relative group">
                   <button className="py-4 px-2 text-white font-semibold hover:text-[#1679AB] transition duration-300">
@@ -129,38 +134,21 @@ export default function NavigationBar({ ConnectToMetamask }) {
                     </div>
                   </div>
                 </div>
-                <a
-                  href="#"
-                  className="py-4 px-2 text-gray-500 font-semibold hover:text-blue-500 transition duration-300"
-                >
-                  About
-                </a>
-                <a
-                  href="#"
-                  className="py-4 px-2 text-gray-500 font-semibold hover:text-blue-500 transition duration-300"
-                >
-                  Contact
-                </a>
               </div>
             </div>
             <div className="items-center flex">
               <div className="flex justify-center ">
                 <button
-                  className="  text-[16px] rounded-sm px-1 py-0.5 border-1 w-96 border-yellow-400 bg-transparent border-2  text-gray-400 focus:border-yellow-400 focus:text-white focus:outline-none "
-                  placeholder="Search"
+                  className="bg-rose-800 px-3 py-2 rounded-xl"
                   onClick={ConnectToMetamask}
                 >
-                  Connect to metamask
+                  {connected ? "Connected" : "Connect To metamask"}
                 </button>
               </div>
             </div>
 
             <div className="items-center flex gap-5">
-              <div className="flex justify-center ">
-                <button className="  text-[16px] rounded-3xl px-3 pt-2 pb-1 bg-[#1679AB] border-1  text-black">
-                  Search
-                </button>
-              </div>
+              <div className="flex justify-center "></div>
               <div className="flex justify-center ">
                 <button className="  text-[16px] rounded-md px-3 py-2  bg-gray-600 text-white ">
                   <a href="https://github.com/PradeepSahhu" target="_blank">

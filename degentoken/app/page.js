@@ -257,13 +257,15 @@ export default function Home() {
 
   return (
     <div className="bg-black">
-      <NavigationBar ConnectToMetamask={ConnectToMetamask} />
+      <NavigationBar
+        ConnectToMetamask={ConnectToMetamask}
+        accounts={accounts ? accounts[0] : "No Account Conne"}
+        connected={connected}
+        balance={bal}
+      />
       <div className="grid grid-cols-3">
         <div className="grid col-start-1 col-end-4">
-          <div className="col-span-4 flex flex-col items-center">
-            <h1 className="text-4xl">Account</h1>
-          </div>
-          <div className="col-span-4 flex flex-col items-center my-10">
+          {/* <div className="col-span-4 flex flex-col items-center my-10">
             <button
               className="rounded-2xl p-5 pt-3 pb-3.5 bg-rose-800 shadow-xl shadow-zinc-800"
               onClick={ConnectToMetamask}
@@ -272,11 +274,15 @@ export default function Home() {
             </button>
           </div>
           <div className="text-2xl col-start-1 col-end-1 justify-start ml-5">
-            <p> Account Address : {accounts ? accounts[0] : "XXX"}</p>
+            <p>
+              {" "}
+              Account Address :{" "}
+              {accounts ? accounts[0] : "No Account Connected"}
+            </p>
           </div>
           <div className="text-xl col-span-3 flex justify-end mr-5">
             Balance : {bal !== undefined ? bal : "xxx"} DGN Tokens
-          </div>
+          </div> */}
         </div>
       </div>
       <div className="w-full grid items-center my-10">
