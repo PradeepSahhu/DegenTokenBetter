@@ -1,18 +1,35 @@
+"use client";
+import { useState } from "react";
+import { useEffect } from "react";
+
 export default function BoughtItem({
   itemName,
   itemSrc,
   itemDescription,
   itemPrice,
+  setShowZoomCard,
+  index,
+  setZoomIndex,
 }) {
+  const handleclick = () => {
+    setShowZoomCard(true);
+    setZoomIndex(index);
+  };
+
   return (
-    <div className="relative inline-block w-96 group">
+    <div
+      className="relative inline-block w-52 group"
+      onClick={() => handleclick()}
+    >
+      {/* //w-96 */}
       <div className="absolute bg-gradient-to-r from-pink-600 to-purple-600 blur-sm -inset-0.5 opacity-75 group-hover:opacity-100 transition duration-200 group-hover:blur-md"></div>
       <div className=" relative rounded-lg bg-black shadow-secondary-1">
         <div
-          className="relative overflow-hidden bg-cover bg-no-repeat w-full h-80"
+          className="relative overflow-hidden bg-cover bg-no-repeat w-full"
           data-twe-ripple-init
           data-twe-ripple-color="light"
         >
+          {/* h-80 */}
           <img
             className="w-full h-full object-cover rounded-t-lg"
             src={

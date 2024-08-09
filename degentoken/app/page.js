@@ -11,6 +11,7 @@ import MintAndBurnInput from "./components/MintAndBurnInput";
 import TransferFriend from "./components/TransferFriend";
 import BurnToken from "./components/BurnToken";
 import NavigationBar from "./components/NavigationBar";
+import BuyTok from "./components/BuyTok";
 // bg-gradient-to-r from-teal-600 via-blue-600 to-indigo-600
 export default function Home() {
   const [connected, setConnected] = useState(false);
@@ -33,21 +34,21 @@ export default function Home() {
   const [transAmount, setTransAmount] = useState();
   const [burnAmount, setBurnAmount] = useState();
 
+  //Buy Wei
+  const [buyAmount, setBuyAmount] = useState();
+  const [weiAmount, setWeiAmount] = useState();
+  const [buytok, setBuyTok] = useState(false);
+
   const urls = [
+    "https://ipfs.io/ipfs/QmRqo6JsyPTXTKtiJQu65b6mGxjDriSZ8TXJycWTtHLi6D", // diamond Medal
+    "https://ipfs.io/ipfs/QmdRhk7rZFdfpj5nNUPPd3EfSrb5Kzze1GDTumLtvj8bYq", // gold medal
+    "https://ipfs.io/ipfs/QmSQrrVdND7GmiG83H9AGYg8kDcw4m1QqbcR6G5FvExANN", // silver medal
+    // "https://ipfs.io/ipfs/QmdFxabWHiWWKdbUNg8Ca61mdgCZtRRHuttosWWsra32Ys",
+    // "https://ipfs.io/ipfs/QmdFxabWHiWWKdbUNg8Ca61mdgCZtRRHuttosWWsra32Ys",
+    "https://ipfs.io/ipfs/QmZGCbF46zPx6FadEo6PoLxijMgMrC5daNTtHbYAjfFxPE",
+    "https://ipfs.io/ipfs/QmcxXkeEp1RtcUSQxtNLLRrTKFJQnPUKW5tqUV6Khrck9z",
     "https://ipfs.io/ipfs/QmP52JDE2gdL3Rc8E83aEmD7SUnhcb5Jjhoy5YoSx4TPRZ", //lambo
     "https://ipfs.io/ipfs/QmcWWFLLWf4fUwHPbqhJJupvPXUW4p6iS3jUivKiG7H27B", //robot
-    "https://ipfs.io/ipfs/QmUASD1U57tGLnupqBoieZfeX2hHWdVEmFz5Hs3kcXeguT", // space city
-    "https://ipfs.io/ipfs/QmNqTfh67vgAMyrefF1UxZH3nj34VHtFx4FsxkLNUuwEXf", // space colony
-    "https://ipfs.io/ipfs/QmUKHAfQqRsNDdyAtgKkQtkk5atn7t9nuGSpaZ4wh4vcdh", // punk girl
-    "https://ipfs.io/ipfs/QmZsKUdF3mvhRbmXVPvC4Q6VGwmUiDTdXnLYSPtzt3VL7n", // girl cyber punk
-    "https://ipfs.io/ipfs/QmbHSggvkZRbHXp5CpXty2JCAxznpdfQhfRhhg53Z9nymK", //god of destruction
-    "https://ipfs.io/ipfs/QmY3ZPzoxw83GUFMU1VB669VWTCzDWv565TdNCqhGSpPg9", // destroied city
-    "https://ipfs.io/ipfs/QmRsaFFU9DAfpMPHAtBLiMdr8NYB7WzBUUX6xm1NmwFpEy", //Dark Dragon
-    "https://ipfs.io/ipfs/QmZ4fb2P13vuhAhQNUbS4Le8YDU2Cc1qPb2M7hTVG437fD", // lightning dragon
-    "https://ipfs.io/ipfs/QmcN77SAPZJJfkngZcDKM6A1dMyRxdMyoPTnvc7WcCi866", // space dragon
-    "https://ipfs.io/ipfs/QmU3jiyPfUcgjCB1KJMLeFNw6QnT2W3pGVszYaSAruvBHq", // Dwarf Forging
-    "https://ipfs.io/ipfs/QmR7PNvVyDSnGXDccTBUd9bPMj91aAcDTf3piK1XCkKoQa", // army of undead
-    "https://ipfs.io/ipfs/QmbwM9oRVGR9Xyd8DE59AHGrVJYGtRbkqxMEKEow9rT8vM", // army
   ];
 
   // function fetchingData() {
@@ -56,7 +57,7 @@ export default function Home() {
   //     .then((data) => console.log(data));
   // }
 
-  const contractAddress = "0xD3F2cc1f2912714Ce1c332A40fE0D35f6F53abA9";
+  const contractAddress = "0x92875BF94d40AaA44bEED57D05119E4D1BCf638B";
   const DegenABI = process.env.abi;
   // const contractAddress = "0xFF8C97cC9B8c03Fc402e7C8231Da8ac711Dbd65e";
 
@@ -108,7 +109,7 @@ export default function Home() {
   const getTokenBalance = async () => {
     try {
       if (degenContract) {
-        const bal = await degenContract.checkingBalance();
+        const bal = await degenContract.checkingTokenBalance();
         setBal(parseInt(bal));
       }
     } catch (error) {
@@ -124,6 +125,22 @@ export default function Home() {
           accounts[0],
           parseInt(amount)
         );
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const buyTokensWei = () => {
+    setBuyTok(!buytok);
+  };
+
+  const buyTok = async () => {
+    try {
+      if (degenContract) {
+        const res = await degenContract.BuyTokens(parseInt(buyAmount), {
+          value: parseInt(weiAmount),
+        });
       }
     } catch (error) {
       console.log(error);
@@ -165,10 +182,10 @@ export default function Home() {
         <hr className="col-start-1 col-end-4 w-full h-1 mx-auto bg-gray-100 border-0 rounded  dark:bg-gray-700" />
         <div className="flex justify-center mb-5">
           <p className="text-4xl font-bold bg-gradient-to-r from-lime-600 via-blue-600 to-pink-600 bg-clip-text text-transparent">
-            Bought NFTs
+            Bought Medals
           </p>
         </div>
-        <hr className="col-start-1 col-end-4 w-full h-1 mx-auto bg-gray-100 border-0 rounded  dark:bg-gray-700" />
+        {/* <hr className="col-start-1 col-end-4 w-full h-1 mx-auto bg-gray-100 border-0 rounded  dark:bg-gray-700" /> */}
         {boughtNFT.map((eachItem, index) => (
           <BoughtItem
             key={index}
@@ -254,9 +271,9 @@ export default function Home() {
     }
     Operation();
   }, []);
-
+  // FEFAE0
   return (
-    <div className="bg-black">
+    <div className="bg-white">
       <NavigationBar
         ConnectToMetamask={ConnectToMetamask}
         accounts={accounts ? accounts[0] : "No Account Conne"}
@@ -286,11 +303,19 @@ export default function Home() {
         </div>
       </div>
       <div className="w-full grid items-center my-10">
-        <div className="grid grid-cols-4 gap-5">
+        <div className="grid grid-cols-5 gap-5">
+          <div className="flex justify-center">
+            <button
+              onClick={() => buyTokensWei()}
+              className="bg-gradient-to-r from-yellow-400 to-lime-500 px-8 pb-2.5 pt-3 text-xs font-medium uppercase leading-normal rounded-2xl hover:bg-gradient-to-r hover:from-emerald-300 hover:to-sky-400 hover:scale-110"
+            >
+              Buy DGN Tokens
+            </button>
+          </div>
           <div className="flex justify-center">
             <button
               onClick={() => mintAndBurnTokens()}
-              className="bg-gradient-to-r from-teal-600 via-blue-600 to-indigo-600 px-8 pb-2.5 pt-3 text-xs font-medium uppercase leading-normal rounded-2xl"
+              className="bg-gradient-to-r from-yellow-400 to-lime-500 px-8 pb-2.5 pt-3 text-xs font-medium uppercase leading-normal rounded-2xl hover:bg-gradient-to-r hover:from-emerald-300 hover:to-sky-400 hover:scale-110"
             >
               Mint DGN Tokens
             </button>
@@ -298,7 +323,7 @@ export default function Home() {
           <div className="flex justify-center">
             <button
               onClick={() => transferToFriend()}
-              className="bg-gradient-to-r from-teal-600 via-blue-600 to-indigo-600 px-8 pb-2.5 pt-3 text-xs font-medium uppercase leading-normal rounded-2xl"
+              className="bg-gradient-to-r from-yellow-400 to-lime-500 px-8 pb-2.5 pt-3 text-xs font-medium uppercase leading-normal rounded-2xl hover:bg-gradient-to-r hover:from-emerald-300 hover:to-sky-400 hover:scale-110"
             >
               Transfer DGN Tokens
             </button>
@@ -306,7 +331,7 @@ export default function Home() {
           <div className="flex justify-center">
             <button
               onClick={() => burntokenFunc()}
-              className="bg-gradient-to-r from-teal-600 via-blue-600 to-indigo-600 px-8 pb-2.5 pt-3 text-xs font-medium uppercase leading-normal rounded-2xl"
+              className="bg-gradient-to-r from-yellow-400 to-lime-500 px-8 pb-2.5 pt-3 text-xs font-medium uppercase leading-normal rounded-2xl hover:bg-gradient-to-r hover:from-emerald-300 hover:to-sky-400 hover:scale-110"
             >
               Burn DGN Tokens
             </button>
@@ -314,7 +339,7 @@ export default function Home() {
           <div className="flex justify-center">
             <button
               onClick={() => displayBoughtNFTs()}
-              className="bg-gradient-to-r from-teal-600 via-blue-600 to-indigo-600 px-8 pb-2.5 pt-3 text-xs font-medium uppercase leading-normal rounded-2xl"
+              className="bg-gradient-to-r from-yellow-400 to-lime-500 px-8 pb-2.5 pt-3 text-xs font-medium uppercase leading-normal rounded-2xl hover:bg-gradient-to-r hover:from-emerald-300 hover:to-sky-400 hover:scale-110"
             >
               View Bought NFTs
             </button>
@@ -338,6 +363,14 @@ export default function Home() {
 
       <hr className="col-start-1 col-end-4 w-full h-1 mx-auto bg-gray-100 border-0 rounded  dark:bg-gray-700" />
 
+      {buytok && (
+        <BuyTok
+          buyTok={buyTok}
+          setWeiAmount={setWeiAmount}
+          setBuyAmount={setBuyAmount}
+        />
+      )}
+
       {!redeemNFT && (
         <div className="">
           <div className="flex justify-center p-5">
@@ -345,7 +378,7 @@ export default function Home() {
               onClick={() => showMarketPlace()}
               className="bg-gradient-to-r from-red-600 via-blue-600 to-indigo-600 px-8 pb-3 pt-4 text-xs font-medium uppercase leading-normal rounded-2xl"
             >
-              Show NFT Market Place
+              Olympics Medal Store
             </button>
           </div>
           <hr className="col-start-1 col-end-4 w-full h-1 mx-auto bg-gray-100 border-0 rounded  dark:bg-gray-700" />
@@ -356,7 +389,7 @@ export default function Home() {
         <div className="mt-10 col-start-1 col-end-4 bg-opacity-90 p-10 justify-center space-x-8 space-y-5">
           <div className="text-2xl bolder flex justify-center mb-10 ">
             <p className="bg-gradient-to-r from-red-600 via-violet-600 to-indigo-600 bg-clip-text text-transparent px-10 text-5xl">
-              NFT STORE
+              Olympics Store
             </p>
           </div>
           {showMarket &&

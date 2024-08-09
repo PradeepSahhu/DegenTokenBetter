@@ -12,11 +12,6 @@ export default function NavigationBar({
             <div className="flex space-x-7">
               <div>
                 <a href="#" className="flex items-center py-4 px-2">
-                  <img
-                    src="./block-.png"
-                    alt="Logo"
-                    className="h-8 w-8 mr-2 rounded-3xl fill-[#1679AB]"
-                  />
                   <span className="font-semibold text-yellow-400 text-lg">
                     {accounts ? accounts : "No Account Connected"}
                   </span>
@@ -25,7 +20,7 @@ export default function NavigationBar({
               <div className="hidden md:flex items-center space-x-1">
                 <a
                   href="#"
-                  classNam="py-4 px-2 text-white font-semibold hover:text-[#1679AB] transition duration-300"
+                  className="py-4 px-2 text-white font-semibold hover:text-[#1679AB] transition duration-300"
                 >
                   Balance : {balance ? balance : "XXX"} DGN Tokens
                 </a>

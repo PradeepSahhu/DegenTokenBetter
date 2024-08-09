@@ -152,6 +152,19 @@ const nextConfig = {
       {
         inputs: [
           {
+            internalType: "uint256",
+            name: "_amount",
+            type: "uint256",
+          },
+        ],
+        name: "BuyTokens",
+        outputs: [],
+        stateMutability: "payable",
+        type: "function",
+      },
+      {
+        inputs: [
+          {
             internalType: "address",
             name: "owner",
             type: "address",
@@ -231,20 +244,7 @@ const nextConfig = {
       },
       {
         inputs: [],
-        name: "checkingBalance",
-        outputs: [
-          {
-            internalType: "uint256",
-            name: "",
-            type: "uint256",
-          },
-        ],
-        stateMutability: "view",
-        type: "function",
-      },
-      {
-        inputs: [],
-        name: "contractBalance",
+        name: "checkingTokenBalance",
         outputs: [
           {
             internalType: "uint256",
@@ -269,19 +269,6 @@ const nextConfig = {
         type: "function",
       },
       {
-        inputs: [],
-        name: "getMintedNFT",
-        outputs: [
-          {
-            internalType: "string[]",
-            name: "",
-            type: "string[]",
-          },
-        ],
-        stateMutability: "view",
-        type: "function",
-      },
-      {
         inputs: [
           {
             internalType: "address",
@@ -294,9 +281,22 @@ const nextConfig = {
             type: "uint256",
           },
         ],
-        name: "mintTokenReward",
+        name: "generateToken",
         outputs: [],
         stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "getMintedNFT",
+        outputs: [
+          {
+            internalType: "string[]",
+            name: "",
+            type: "string[]",
+          },
+        ],
+        stateMutability: "view",
         type: "function",
       },
       {
@@ -424,13 +424,6 @@ const nextConfig = {
             type: "bool",
           },
         ],
-        stateMutability: "nonpayable",
-        type: "function",
-      },
-      {
-        inputs: [],
-        name: "withdraw",
-        outputs: [],
         stateMutability: "nonpayable",
         type: "function",
       },
