@@ -57,7 +57,7 @@ export default function Home() {
   //     .then((data) => console.log(data));
   // }
 
-  const contractAddress = "0x92875BF94d40AaA44bEED57D05119E4D1BCf638B";
+  const contractAddress = "0x4D192c8b6A8F757f4379edd7198Df8B642493d16";
   const DegenABI = process.env.abi;
   // const contractAddress = "0xFF8C97cC9B8c03Fc402e7C8231Da8ac711Dbd65e";
 
